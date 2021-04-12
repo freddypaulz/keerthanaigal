@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/providers/ui_provider.dart';
+import 'dart:io';
+import 'app.dart';
+import './utilities/firstTimeVisitChecker.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  HttpOverrides.global = new MyHttpOverrides();
+
+  await UiState(18).getUserFontSize();
+
+  runApp(
+    ProviderScope(
+      child: MyApp(
+        firstTimeVisit: await FirstTimeVisitChecker().firstTimeVisitChecker(),
+      ),
+    ),
+  );
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
