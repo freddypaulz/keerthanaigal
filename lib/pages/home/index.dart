@@ -91,6 +91,18 @@ class HomePage extends StatelessWidget {
       appBar: KAppBar(
         height: 50,
       ),
+      bottomBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ac_unit),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ac_unit),
+            label: 'Home',
+          ),
+        ],
+      ),
     );
   }
 }

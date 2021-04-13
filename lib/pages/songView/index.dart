@@ -18,7 +18,9 @@ class Song extends ConsumerWidget {
   Widget build(BuildContext context, watch) {
     SongState songsProviderData = watch(SongsProvider);
     var songs = songsProviderData.songList.songs;
+    var favoriteList = songsProviderData.favoriteList;
     return PageView.builder(
+      controller: PageController(initialPage: songsProviderData.songViewId - 1),
       itemBuilder: (context, index) {
         return Column(
           children: [
@@ -28,10 +30,17 @@ class Song extends ConsumerWidget {
                 TextWidget('Song: ${songs[index].number}'),
                 IconButton(
                   icon: Icon(
-                    Icons.favorite_border_rounded,
+                    !favoriteList.contains(songs[index].number.toString())
+                        ? Icons.favorite_border_rounded
+                        : Icons.favorite_rounded,
                   ),
                   color: Theme.of(context).accentColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    favoriteList.contains(songs[index].number.toString())
+                        ? songsProviderData.removeFavorite(songs[index].number)
+                        : songsProviderData
+                            .setFavoriteList(songs[index].number);
+                  },
                 )
               ],
             ),

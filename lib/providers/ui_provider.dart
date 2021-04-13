@@ -1,21 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:keerthanaigal/utilities/setFontSize.dart';
+import 'package:keerthanaigal/utilities/fontSize.dart';
 
 class UiState extends ChangeNotifier {
-  UiState(this.fontSize);
+  UiState();
 
-  double fontSize;
+  double fontSize = 18;
   changeFontSize(double value) async {
     fontSize = value;
-    await SetFontSize().setFontSize(value);
+    await FontSize().setFontSize(value);
     notifyListeners();
   }
 
   getUserFontSize() async {
-    double? userFontSize = await SetFontSize().getFontSize();
+    double? userFontSize = await FontSize().getFontSize();
     if (userFontSize == null) {
-      await SetFontSize().setFontSize(18);
+      await FontSize().setFontSize(18);
       this.fontSize = 18;
     } else {
       this.fontSize = userFontSize;
@@ -36,5 +36,5 @@ class UiState extends ChangeNotifier {
 
 // ignore: non_constant_identifier_names
 final UiProvider = ChangeNotifierProvider<UiState>((ref) {
-  return UiState(18);
+  return UiState();
 });

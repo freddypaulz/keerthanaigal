@@ -10,7 +10,7 @@ void main() async {
 
   HttpOverrides.global = new MyHttpOverrides();
 
-  await UiState(18).getUserFontSize();
+  await UiState().getUserFontSize();
 
   runApp(
     ProviderScope(

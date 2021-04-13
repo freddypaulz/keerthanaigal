@@ -5,21 +5,22 @@ import 'package:flutter/services.dart';
 import 'package:keerthanaigal/models/song_content.dart';
 import 'package:keerthanaigal/models/song_list.dart';
 import 'package:keerthanaigal/models/song_model.dart';
+import 'package:keerthanaigal/utilities/favoriteSonglist.dart';
 
 class SongState extends ChangeNotifier {
   SongState(this.songList, this.songViewId) {
-    getSongs().then((value) {
-      this.songList = value;
-      notifyListeners();
-    });
+    getSongs();
+    getFavoriteList();
   }
 
   SongList songList;
+  List<String> favoriteList = [];
   int songViewId;
 
-  Future<SongList> getSongs() async {
+  getSongs() async {
     List<dynamic> parsedJson = await loadJson();
-    return SongList.fromJson(parsedJson);
+    this.songList = SongList.fromJson(parsedJson);
+    notifyListeners();
   }
 
   Future<List<dynamic>> loadJson() async {
@@ -30,6 +31,23 @@ class SongState extends ChangeNotifier {
 
   setSongId(int id) async {
     songViewId = id;
+  }
+
+  getFavoriteList() async {
+    this.favoriteList = await FavoriteSongList().getFavoriteSongList() ?? [];
+    notifyListeners();
+  }
+
+  setFavoriteList(int songNumber) async {
+    favoriteList.add(songNumber.toString());
+    await FavoriteSongList().setFavoriteSongList(favoriteList);
+    notifyListeners();
+  }
+
+  removeFavorite(int songNumber) async {
+    favoriteList.remove(songNumber.toString());
+    await FavoriteSongList().setFavoriteSongList(favoriteList);
+    notifyListeners();
   }
 }
 

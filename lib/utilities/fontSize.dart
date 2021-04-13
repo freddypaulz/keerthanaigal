@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SetFontSize {
+class FontSize {
   Future<double?> getFontSize() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
