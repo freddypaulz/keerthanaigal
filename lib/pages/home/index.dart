@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:keerthanaigal/pages/songView/index.dart';
 import '../../layout/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
-import '../../routes.dart';
+import '../songView/index.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -36,11 +37,10 @@ class SongListView extends ConsumerWidget {
         return InkWell(
           onTap: () {
             songsProviderData.setSongId(id);
-            Navigator.pushNamed(
-              context,
-              Routes.songViewPage,
-              arguments: id,
-            );
+            Navigator.push(
+                context,
+                // Routes.songViewPage,
+                MaterialPageRoute(builder: (context) => SongView()));
           },
           child: Container(
             padding: EdgeInsets.only(top: 10, bottom: 10),

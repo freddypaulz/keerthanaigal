@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       initialRoute:
-          firstTimeVisit == true ? Routes.onboardingPage : Routes.homePage,
+          firstTimeVisit == true ? Routes.onboardingPage : Routes.mainPage,
       onGenerateRoute: Routes.generateRoutes,
       debugShowCheckedModeBanner: false,
     );
