@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:keerthanaigal/theme/colors.dart';
+import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
 import 'package:keerthanaigal/widgets/TextWidget.dart';
 import '../../layout/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +21,7 @@ class Song extends ConsumerWidget {
     SongState songsProviderData = watch(SongsProvider);
     var songs = songsProviderData.songList.songs;
     var favoriteList = songsProviderData.favoriteList;
+
     return PageView.builder(
       controller: PageController(initialPage: songsProviderData.songViewId - 1),
       itemBuilder: (context, index) {
@@ -28,19 +31,24 @@ class Song extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextWidget('Song: ${songs[index].number}'),
-                IconButton(
-                  icon: Icon(
-                    !favoriteList.contains(songs[index].number.toString())
-                        ? Icons.favorite_border_rounded
-                        : Icons.favorite_rounded,
+                Card(
+                  elevation: 0,
+                  color: Theme.of(context).primaryColor,
+                  child: IconButton(
+                    icon: Icon(
+                      !favoriteList.contains(songs[index].number.toString())
+                          ? Icons.favorite_border_rounded
+                          : Icons.favorite_rounded,
+                    ),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () {
+                      favoriteList.contains(songs[index].number.toString())
+                          ? songsProviderData
+                              .removeFavorite(songs[index].number)
+                          : songsProviderData
+                              .setFavoriteList(songs[index].number);
+                    },
                   ),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    favoriteList.contains(songs[index].number.toString())
-                        ? songsProviderData.removeFavorite(songs[index].number)
-                        : songsProviderData
-                            .setFavoriteList(songs[index].number);
-                  },
                 )
               ],
             ),
@@ -55,6 +63,7 @@ class Song extends ConsumerWidget {
         );
       },
       itemCount: songs.length,
+      physics: CustomPageViewScrollPhysics(),
     );
   }
 }
@@ -124,9 +133,6 @@ class SongViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Layout(
       body: SongView(),
-      appBar: KAppBar(
-        height: 50,
-      ),
     );
   }
 }

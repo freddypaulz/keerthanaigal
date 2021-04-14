@@ -16,7 +16,7 @@ class OnBoarding extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 visit.changeFirstTime();
-                Navigator.pushNamed(context, Routes.homePage);
+                Navigator.pushNamed(context, Routes.mainPage);
               },
               child: Text('Done'),
             )

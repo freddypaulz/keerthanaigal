@@ -56,6 +56,7 @@ class SongListView extends ConsumerWidget {
         );
       },
       itemCount: count,
+      physics: BouncingScrollPhysics(),
     );
   }
 }
@@ -88,9 +89,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Layout(
       body: Home(),
-      appBar: KAppBar(
-        height: 50,
-      ),
+      // appBar: KAppBar(
+      //   height: 50,
+      // ),
     );
   }
 }
