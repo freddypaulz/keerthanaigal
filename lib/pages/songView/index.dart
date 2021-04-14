@@ -133,6 +133,9 @@ class SongViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Layout(
       body: SongView(),
+      appBar: KAppBar(
+        height: 50,
+      ),
     );
   }
 }

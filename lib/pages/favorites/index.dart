@@ -1,12 +1,105 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/models/song_model.dart';
+import '../../providers/song_provider.dart';
+import '../../providers/ui_provider.dart';
+import '../songView/index.dart';
+import 'package:keerthanaigal/layout/index.dart';
 
-class FavoritesPage extends StatelessWidget {
-  const FavoritesPage({Key? key}) : super(key: key);
+class Favorites extends StatelessWidget {
+  const Favorites({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        child: SongListView(),
+      ),
+    );
+  }
+}
+
+class SongListView extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, watch) {
+    double width = MediaQuery.of(context).size.width;
+
+    SongState songsProviderData = watch(SongsProvider);
+    List<SongModel> songs = songsProviderData.songList.songs;
+    List<String> favoriteList = songsProviderData.favoriteList;
+
+    List<SongModel> favoriteSongs = songs.where((element) {
+      return favoriteList.contains(element.number.toString());
+    }).toList();
+
+    int count = favoriteSongs.length;
+
+    UiState uiProviderData = watch(UiProvider);
+
+    uiProviderData.getFontSize(width);
+
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        int id = favoriteSongs[index].id;
+        String title = favoriteSongs[index].tamil.title;
+
+        return InkWell(
+          onTap: () {
+            songsProviderData.setSongId(id);
+            Navigator.push(
+                context,
+                // Routes.songViewPage,
+                MaterialPageRoute(builder: (context) => SongView()));
+          },
+          child: Container(
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            margin: EdgeInsets.all(5),
+            child: Text(
+              '${index + 1}. $title',
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyText1?.color,
+                fontSize: uiProviderData.fontSize,
+              ),
+            ),
+          ),
+        );
+      },
+      itemCount: count,
+      physics: BouncingScrollPhysics(),
+    );
+  }
+}
+
+class KAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final double height;
+
+  const KAppBar({Key? key, required this.height});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Favorites'),
+    return AppBar(
+      title: Text(
+        'Favorites',
+        style: TextStyle(
+          color: Theme.of(context).textTheme.bodyText1?.color,
+        ),
+      ),
+      centerTitle: true,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+}
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Layout(
+      body: Favorites(),
+      appBar: KAppBar(
+        height: 50,
+      ),
     );
   }
 }

@@ -19,9 +19,8 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // backgroundColor: ,
       title: Text(
-        'Geethangalum Keerthanaigalum',
+        'Keerthanaigal',
         style: TextStyle(
           color: Theme.of(context).textTheme.bodyText1?.color,
         ),
@@ -61,11 +60,10 @@ class _MainPageState extends State<MainPage> {
               _buildOffstageNavigator(2),
             ],
           ),
-          padding: EdgeInsets.all(16),
         ),
-        appBar: KAppBar(
-          height: 50,
-        ),
+        // appBar: KAppBar(
+        //   height: 50,
+        // ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: (index) {
@@ -96,7 +94,7 @@ class _MainPageState extends State<MainPage> {
     return {
       '/': (context) {
         return [
-          Home(),
+          HomePage(),
           FavoritesPage(),
           SettingsPage(),
         ].elementAt(index);

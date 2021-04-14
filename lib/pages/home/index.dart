@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:keerthanaigal/layout/index.dart';
 import 'package:keerthanaigal/pages/songView/index.dart';
-import '../../layout/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
 import '../songView/index.dart';
@@ -40,7 +42,7 @@ class SongListView extends ConsumerWidget {
             Navigator.push(
                 context,
                 // Routes.songViewPage,
-                MaterialPageRoute(builder: (context) => SongView()));
+                MaterialPageRoute(builder: (context) => SongViewPage()));
           },
           child: Container(
             padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -61,6 +63,85 @@ class SongListView extends ConsumerWidget {
   }
 }
 
+class SongNumberSearchField extends ConsumerWidget {
+  const SongNumberSearchField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, watch) {
+    final _controller = TextEditingController();
+    SongState songsProviderData = watch(SongsProvider);
+
+    handleSongNoSearch(String value) {
+      int songIndex = songsProviderData.songList.songs
+          .indexWhere((element) => element.number == int.parse(value));
+      if (songIndex != -1) {
+        songsProviderData.setSongId(int.parse(value));
+        Navigator.push(
+          context,
+          // Routes.songViewPage,
+          MaterialPageRoute(builder: (context) => SongViewPage()),
+        );
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: Theme.of(context).primaryColor,
+                content: SingleChildScrollView(
+                  child: TextWidget('No song found for that number!'),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text(
+                      'Got it!',
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            });
+      }
+
+      print(value);
+      _controller.clear();
+    }
+
+    return TextField(
+      controller: _controller,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+      ],
+      decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.all(5.0),
+        hintText: 'Song No',
+        hintStyle: TextStyle(
+          color: Theme.of(context).textTheme.bodyText1?.color,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.white70,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).accentColor,
+          ),
+        ),
+      ),
+      onSubmitted: handleSongNoSearch,
+    );
+  }
+}
+
 class KAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
@@ -69,14 +150,20 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // backgroundColor: ,
       title: Text(
-        'Geethangalum Keerthanaigalum',
+        'Keerthanaigal',
         style: TextStyle(
           color: Theme.of(context).textTheme.bodyText1?.color,
         ),
       ),
-      centerTitle: true,
+      actions: [
+        Container(
+          width: 100,
+          margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
+          child: SongNumberSearchField(),
+        ),
+      ],
+      // centerTitle: true,
     );
   }
 
@@ -89,9 +176,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Layout(
       body: Home(),
-      // appBar: KAppBar(
-      //   height: 50,
-      // ),
+      appBar: KAppBar(
+        height: 50,
+      ),
     );
   }
 }
