@@ -49,7 +49,7 @@ class SongListView extends ConsumerWidget {
             Navigator.push(
                 context,
                 // Routes.songViewPage,
-                MaterialPageRoute(builder: (context) => SongView()));
+                MaterialPageRoute(builder: (context) => SongViewPage()));
           },
           child: Container(
             padding: EdgeInsets.only(top: 10, bottom: 10),

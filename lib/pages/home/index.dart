@@ -119,6 +119,9 @@ class SongNumberSearchField extends ConsumerWidget {
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
       ],
+      style: TextStyle(
+        color: Theme.of(context).textTheme.bodyText1?.color,
+      ),
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.all(5.0),
