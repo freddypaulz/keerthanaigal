@@ -6,6 +6,8 @@ class UiState extends ChangeNotifier {
   UiState();
 
   double fontSize = 18;
+  double tempFontSize = 18;
+
   changeFontSize(double value) async {
     fontSize = value;
     await FontSize().setFontSize(value);
@@ -31,6 +33,15 @@ class UiState extends ChangeNotifier {
     } else if (width <= 991) {
       fontSize = this.fontSize * 1.5;
     }
+  }
+
+  changeTempFontSize(double value) {
+    tempFontSize = value;
+    notifyListeners();
+  }
+
+  getTempFontSize() {
+    return tempFontSize;
   }
 }
 

@@ -14,6 +14,7 @@ class TextWidget extends ConsumerWidget {
         color: Theme.of(context).textTheme.bodyText1?.color,
         fontSize: uiProviderData.fontSize,
       ),
+      textAlign: TextAlign.center,
     );
   }
 }

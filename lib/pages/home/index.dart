@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:keerthanaigal/layout/index.dart';
 import 'package:keerthanaigal/pages/songView/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/theme/colors.dart';
 import 'package:keerthanaigal/widgets/TextWidget.dart';
 import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
@@ -80,7 +81,6 @@ class SongNumberSearchField extends ConsumerWidget {
         songsProviderData.setSongId(int.parse(value));
         Navigator.push(
           context,
-          // Routes.songViewPage,
           MaterialPageRoute(builder: (context) => SongViewPage()),
         );
       } else {
@@ -131,7 +131,9 @@ class SongNumberSearchField extends ConsumerWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white70,
+            color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? Colors.white70
+                : KThemeData.colorDark.shade400,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -150,23 +152,33 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const KAppBar({Key? key, required this.height});
 
+  removeFocus(context) {
+    FocusScope.of(context).unfocus();
+    new TextEditingController().clear();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(
-        'Keerthanaigal',
-        style: TextStyle(
-          color: Theme.of(context).textTheme.bodyText1?.color,
+    return InkWell(
+      onTap: () {
+        removeFocus(context);
+      },
+      child: AppBar(
+        title: Text(
+          'Keerthanaigal',
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodyText1?.color,
+          ),
         ),
+        actions: [
+          Container(
+            width: 100,
+            margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
+            child: SongNumberSearchField(),
+          ),
+        ],
+        // centerTitle: true,
       ),
-      actions: [
-        Container(
-          width: 100,
-          margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
-          child: SongNumberSearchField(),
-        ),
-      ],
-      // centerTitle: true,
     );
   }
 
