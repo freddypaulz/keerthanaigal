@@ -11,6 +11,7 @@ void main() async {
   HttpOverrides.global = new MyHttpOverrides();
 
   await UiState().getUserFontSize();
+  // await UiState().getUserSongLanguage();
 
   runApp(
     ProviderScope(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/theme/colors.dart';
 import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
 import 'package:keerthanaigal/widgets/TextWidget.dart';
+import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
+import 'package:keerthanaigal/widgets/songNumberSearchWidget.dart';
 import '../../layout/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/song_provider.dart';
@@ -21,12 +24,17 @@ class Song extends ConsumerWidget {
     SongState songsProviderData = watch(SongsProvider);
     var songs = songsProviderData.songList.songs;
     var favoriteList = songsProviderData.favoriteList;
-
+    var uiProviderData = watch(UiProvider);
     return PageView.builder(
       controller: PageController(initialPage: songsProviderData.songViewId - 1),
       itemBuilder: (context, index) {
         return Column(
           children: [
+            Container(
+              child: TextWidget(uiProviderData.language == 0
+                  ? songs[index].tamil.title
+                  : songs[index].tanglish.title),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -55,7 +63,10 @@ class Song extends ConsumerWidget {
             Expanded(
               child: Container(
                 child: Center(
-                  child: SongText(song: songs[index].tamil.content),
+                  child: SongText(
+                      song: uiProviderData.language == 0
+                          ? songs[index].tamil.content
+                          : songs[index].tanglish.content),
                 ),
               ),
             ),
@@ -103,23 +114,31 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const KAppBar({Key? key, required this.height});
 
+  removeFocus(context) {
+    FocusScope.of(context).unfocus();
+    new TextEditingController().clear();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: Theme.of(context).accentColor,
-        ),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      title: Text(
-        'Geethangalum Keerthanaigalum',
-        style: TextStyle(
-          color: Theme.of(context).textTheme.bodyText1?.color,
-        ),
+    return InkWell(
+      onTap: () {
+        removeFocus(context);
+      },
+      child: AppBar(
+        actions: [
+          Container(
+            // width: 100,
+            margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
+            child: LanguageDropdownWidget(),
+          ),
+          Container(
+            width: 100,
+            margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
+            child: SongNumberSearchWidget(),
+          ),
+        ],
+        // centerTitle: true,
       ),
     );
   }

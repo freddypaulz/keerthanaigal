@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:keerthanaigal/layout/index.dart';
 import 'package:keerthanaigal/pages/songView/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:keerthanaigal/theme/colors.dart';
-import 'package:keerthanaigal/widgets/TextWidget.dart';
+import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
+import 'package:keerthanaigal/widgets/songNumberSearchWidget.dart';
 import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
 import '../songView/index.dart';
@@ -35,7 +34,9 @@ class SongListView extends ConsumerWidget {
     return ListView.builder(
       itemBuilder: (context, index) {
         int id = songsProviderData.songList.songs[index].id;
-        String title = songsProviderData.songList.songs[index].tamil.title;
+        String title = uiProviderData.language == 0
+            ? songsProviderData.songList.songs[index].tamil.title
+            : songsProviderData.songList.songs[index].tanglish.title;
 
         return InkWell(
           onTap: () {
@@ -60,89 +61,6 @@ class SongListView extends ConsumerWidget {
       },
       itemCount: count,
       physics: BouncingScrollPhysics(),
-    );
-  }
-}
-
-class SongNumberSearchField extends ConsumerWidget {
-  const SongNumberSearchField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, watch) {
-    final _controller = TextEditingController();
-    SongState songsProviderData = watch(SongsProvider);
-
-    handleSongNoSearch(String value) {
-      int songIndex = songsProviderData.songList.songs
-          .indexWhere((element) => element.number == int.parse(value));
-      if (songIndex != -1) {
-        songsProviderData.setSongId(int.parse(value));
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SongViewPage()),
-        );
-      } else {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                backgroundColor: Theme.of(context).primaryColor,
-                content: SingleChildScrollView(
-                  child: TextWidget('No song found for that number!'),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text(
-                      'Got it!',
-                      style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            });
-      }
-
-      print(value);
-      _controller.clear();
-    }
-
-    return TextField(
-      controller: _controller,
-      keyboardType: TextInputType.number,
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-      ],
-      style: TextStyle(
-        color: Theme.of(context).textTheme.bodyText1?.color,
-      ),
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.all(5.0),
-        hintText: 'Song No',
-        hintStyle: TextStyle(
-          color: Theme.of(context).textTheme.bodyText1?.color,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: MediaQuery.of(context).platformBrightness == Brightness.dark
-                ? Colors.white70
-                : KThemeData.colorDark.shade400,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).accentColor,
-          ),
-        ),
-      ),
-      onSubmitted: handleSongNoSearch,
     );
   }
 }
@@ -172,9 +90,14 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         actions: [
           Container(
+            // width: 100,
+            margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
+            child: LanguageDropdownWidget(),
+          ),
+          Container(
             width: 100,
             margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
-            child: SongNumberSearchField(),
+            child: SongNumberSearchWidget(),
           ),
         ],
         // centerTitle: true,
