@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SongLanguage {
+class SongLanguagePreference {
   Future<int?> getSongLanguage() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 

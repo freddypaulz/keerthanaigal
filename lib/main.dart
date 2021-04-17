@@ -10,7 +10,8 @@ void main() async {
 
   HttpOverrides.global = new MyHttpOverrides();
 
-  await UiState().getUserFontSize();
+  // await UiState().getUserFontSize();
+  // await UiState().getUserTheme();
   // await UiState().getUserSongLanguage();
 
   runApp(

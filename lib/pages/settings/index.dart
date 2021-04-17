@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/pages/settings/widgets/fontSizeSlider.dart';
+import 'package:keerthanaigal/pages/settings/widgets/themeToggle.dart';
 import '../../providers/ui_provider.dart';
 import 'package:keerthanaigal/layout/index.dart';
 
@@ -60,7 +61,7 @@ class SettingsListView extends StatelessWidget {
             context
                 .read(UiProvider)
                 .changeTempFontSize(context.read(UiProvider).fontSize);
-            _showDialog(context);
+            _showFontDialog(context);
           },
           child: Container(
             child: SettingsTextWidget(
@@ -84,6 +85,9 @@ class SettingsListView extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 15),
         ),
         InkWell(
+          onTap: () {
+            _showThemeDialog(context);
+          },
           child: Container(
             child: SettingsTextWidget(
               value: 'Theme',
@@ -95,7 +99,7 @@ class SettingsListView extends StatelessWidget {
     );
   }
 
-  _showDialog(context) {
+  _showFontDialog(context) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -124,6 +128,31 @@ class SettingsListView extends StatelessWidget {
               onPressed: () {
                 double value = context.read(UiProvider).getTempFontSize();
                 context.read(UiProvider).changeFontSize(value);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showThemeDialog(context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).primaryColor,
+          content: ThemeToggle(),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Close',
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),

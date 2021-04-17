@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:keerthanaigal/utilities/fontSize.dart';
-import 'package:keerthanaigal/utilities/songLanguage.dart';
+import 'package:keerthanaigal/utilities/fontSizePreference.dart';
+import 'package:keerthanaigal/utilities/songLanguagePreference.dart';
+import 'package:keerthanaigal/utilities/themePreference.dart';
 
 class UiState extends ChangeNotifier {
   UiState();
@@ -9,17 +10,34 @@ class UiState extends ChangeNotifier {
   double fontSize = 18;
   double tempFontSize = 18;
   int language = 0;
+  int theme = 2;
+
+  changeTheme(int value) async {
+    theme = value;
+    await ThemePreference().setTheme(value);
+    notifyListeners();
+  }
+
+  getUserTheme() async {
+    int? userTheme = await ThemePreference().getTheme();
+    if (userTheme == null) {
+      await ThemePreference().setTheme(2);
+      this.theme = 2;
+    } else {
+      this.theme = userTheme;
+    }
+  }
 
   changeFontSize(double value) async {
     fontSize = value;
-    await FontSize().setFontSize(value);
+    await FontSizePreference().setFontSize(value);
     notifyListeners();
   }
 
   getUserFontSize() async {
-    double? userFontSize = await FontSize().getFontSize();
+    double? userFontSize = await FontSizePreference().getFontSize();
     if (userFontSize == null) {
-      await FontSize().setFontSize(18);
+      await FontSizePreference().setFontSize(18);
       this.fontSize = 18;
     } else {
       this.fontSize = userFontSize;
@@ -39,22 +57,19 @@ class UiState extends ChangeNotifier {
 
   changeSongLanguage(int value) async {
     this.language = value;
-    print('${this.language} language');
 
-    await SongLanguage().setSongLanguage(value);
+    await SongLanguagePreference().setSongLanguage(value);
     notifyListeners();
   }
 
   getUserSongLanguage() async {
-    int? userSongLanguage = await SongLanguage().getSongLanguage();
+    int? userSongLanguage = await SongLanguagePreference().getSongLanguage();
 
     if (userSongLanguage == null) {
-      await SongLanguage().setSongLanguage(0);
+      await SongLanguagePreference().setSongLanguage(0);
       this.language = 0;
-      print('$language language null');
     } else {
       this.language = userSongLanguage;
-      print('$language language');
     }
     notifyListeners();
   }

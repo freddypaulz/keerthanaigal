@@ -81,10 +81,7 @@ class _MainPageState extends State<MainPage> {
           ],
           backgroundColor: Theme.of(context).primaryColor,
           selectedItemColor: Theme.of(context).accentColor,
-          unselectedItemColor:
-              MediaQuery.of(context).platformBrightness == Brightness.dark
-                  ? Colors.white70
-                  : KThemeData.colorDark.shade400,
+          unselectedItemColor: Theme.of(context).textTheme.bodyText1?.color,
         ),
       ),
     );

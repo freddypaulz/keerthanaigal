@@ -20,7 +20,6 @@ class _LanguageDropdownWidgetState extends State<LanguageDropdownWidget> {
       builder: (BuildContext context,
           T Function<T>(ProviderBase<Object?, T>) watch, Widget? child) {
         UiState uiProviderData = watch(UiProvider);
-        print('${uiProviderData.language}, drop');
 
         return DropdownButton(
           dropdownColor: Theme.of(context).primaryColor,

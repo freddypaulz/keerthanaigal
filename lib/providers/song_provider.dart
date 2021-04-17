@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:keerthanaigal/models/song_content.dart';
 import 'package:keerthanaigal/models/song_list.dart';
 import 'package:keerthanaigal/models/song_model.dart';
-import 'package:keerthanaigal/utilities/favoriteSonglist.dart';
+import 'package:keerthanaigal/utilities/favoriteSongPreference.dart';
 
 class SongState extends ChangeNotifier {
   SongState(this.songList, this.songViewId) {
@@ -34,19 +34,20 @@ class SongState extends ChangeNotifier {
   }
 
   getFavoriteList() async {
-    this.favoriteList = await FavoriteSongList().getFavoriteSongList() ?? [];
+    this.favoriteList =
+        await FavoriteSongPreference().getFavoriteSongList() ?? [];
     notifyListeners();
   }
 
   setFavoriteList(int songNumber) async {
     favoriteList.add(songNumber.toString());
-    await FavoriteSongList().setFavoriteSongList(favoriteList);
+    await FavoriteSongPreference().setFavoriteSongList(favoriteList);
     notifyListeners();
   }
 
   removeFavorite(int songNumber) async {
     favoriteList.remove(songNumber.toString());
-    await FavoriteSongList().setFavoriteSongList(favoriteList);
+    await FavoriteSongPreference().setFavoriteSongList(favoriteList);
     notifyListeners();
   }
 }

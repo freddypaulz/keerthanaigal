@@ -69,14 +69,13 @@ class SongNumberSearchWidget extends ConsumerWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: MediaQuery.of(context).platformBrightness == Brightness.dark
-                ? Colors.white70
-                : KThemeData.colorDark.shade400,
+            color: Theme.of(context).accentColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).accentColor,
+            width: 2.0,
           ),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoriteSongList {
+class FavoriteSongPreference {
   Future<List<String>?> getFavoriteSongList() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 

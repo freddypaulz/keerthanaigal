@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/providers/ui_provider.dart';
 
 import 'routes.dart';
 import 'theme/colors.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   MyApp({Key? key, this.firstTimeVisit}) : super(key: key);
   final bool? firstTimeVisit;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
+    var uiProviderData = watch(UiProvider);
+    uiProviderData.getUserTheme();
     return MaterialApp(
       title: 'Keerthanaigal',
       theme: ThemeData(
@@ -28,6 +33,11 @@ class MyApp extends StatelessWidget {
           bodyText1: TextStyle(color: Colors.white70),
         ),
       ),
+      themeMode: uiProviderData.theme == 2
+          ? ThemeMode.system
+          : uiProviderData.theme == 1
+              ? ThemeMode.dark
+              : ThemeMode.light,
       initialRoute:
           firstTimeVisit == true ? Routes.onboardingPage : Routes.mainPage,
       onGenerateRoute: Routes.generateRoutes,
