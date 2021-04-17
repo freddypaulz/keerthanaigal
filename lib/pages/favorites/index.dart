@@ -41,7 +41,9 @@ class SongListView extends ConsumerWidget {
     return ListView.builder(
       itemBuilder: (context, index) {
         int id = favoriteSongs[index].id;
-        String title = favoriteSongs[index].tamil.title;
+        String title = uiProviderData.language == 0
+            ? songsProviderData.songList.songs[index].tamil.title
+            : songsProviderData.songList.songs[index].tanglish.title;
 
         return InkWell(
           onTap: () {
