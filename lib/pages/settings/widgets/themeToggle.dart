@@ -12,16 +12,16 @@ class ThemeToggle extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: 50,
-                child: Text(
-                  'Theme',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Theme.of(context).textTheme.bodyText1?.color,
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 50,
+              //   child: Text(
+              //     'Theme',
+              //     style: TextStyle(
+              //       fontSize: 18,
+              //       color: Theme.of(context).textTheme.bodyText1?.color,
+              //     ),
+              //   ),
+              // ),
               RadioListTile(
                 title: Text(
                   'Light 💡',

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'dart:io';
 import 'app.dart';
 import './utilities/firstTimeVisitChecker.dart';

@@ -3,11 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
 
 class LanguageDropdownWidget extends StatefulWidget {
+  LanguageDropdownWidget({this.underline});
+  final bool? underline;
   @override
-  _LanguageDropdownWidgetState createState() => _LanguageDropdownWidgetState();
+  _LanguageDropdownWidgetState createState() =>
+      _LanguageDropdownWidgetState(underline);
 }
 
 class _LanguageDropdownWidgetState extends State<LanguageDropdownWidget> {
+  bool? underline;
+
+  _LanguageDropdownWidgetState(this.underline);
+
   @override
   void initState() {
     super.initState();
@@ -22,6 +29,7 @@ class _LanguageDropdownWidgetState extends State<LanguageDropdownWidget> {
         UiState uiProviderData = watch(UiProvider);
 
         return DropdownButton(
+          isExpanded: true,
           dropdownColor: Theme.of(context).primaryColor,
           iconEnabledColor: Theme.of(context).accentColor,
           focusColor: Theme.of(context).accentColor,
@@ -31,7 +39,7 @@ class _LanguageDropdownWidgetState extends State<LanguageDropdownWidget> {
             print(value);
             context.read(UiProvider).changeSongLanguage(value!);
           },
-          underline: SizedBox(),
+          underline: underline == null ? SizedBox() : null,
           items: [
             DropdownMenuItem(
               child: dropdownTextWidget('Tamil'),

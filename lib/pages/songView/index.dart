@@ -128,7 +128,7 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         actions: [
           Container(
-            // width: 100,
+            width: 110,
             margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
             child: LanguageDropdownWidget(),
           ),

@@ -38,37 +38,47 @@ class SongListView extends ConsumerWidget {
 
     uiProviderData.getFontSize(width);
 
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        int id = favoriteSongs[index].id;
-        String title = uiProviderData.language == 0
-            ? songsProviderData.songList.songs[index].tamil.title
-            : songsProviderData.songList.songs[index].tanglish.title;
+    return count > 0
+        ? ListView.builder(
+            itemBuilder: (context, index) {
+              int id = favoriteSongs[index].id;
+              String title = uiProviderData.language == 0
+                  ? songsProviderData.songList.songs[index].tamil.title
+                  : songsProviderData.songList.songs[index].tanglish.title;
 
-        return InkWell(
-          onTap: () {
-            songsProviderData.setSongId(id);
-            Navigator.push(
-                context,
-                // Routes.songViewPage,
-                MaterialPageRoute(builder: (context) => SongViewPage()));
-          },
-          child: Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            margin: EdgeInsets.all(5),
+              return InkWell(
+                onTap: () {
+                  songsProviderData.setSongId(id);
+                  Navigator.push(
+                      context,
+                      // Routes.songViewPage,
+                      MaterialPageRoute(builder: (context) => SongViewPage()));
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  margin: EdgeInsets.all(5),
+                  child: Text(
+                    '${index + 1}. $title',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyText1?.color,
+                      fontSize: uiProviderData.fontSize,
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemCount: count,
+            physics: BouncingScrollPhysics(),
+          )
+        : Center(
             child: Text(
-              '${index + 1}. $title',
+              'oops! no favorites yet 💔',
               style: TextStyle(
                 color: Theme.of(context).textTheme.bodyText1?.color,
-                fontSize: uiProviderData.fontSize,
+                fontSize: 20,
               ),
             ),
-          ),
-        );
-      },
-      itemCount: count,
-      physics: BouncingScrollPhysics(),
-    );
+          );
   }
 }
 

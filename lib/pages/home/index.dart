@@ -12,11 +12,9 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: SongListView(),
-      ),
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      child: SongListView(),
     );
   }
 }
@@ -90,12 +88,12 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         actions: [
           Container(
-            // width: 100,
+            width: 100,
             margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
             child: LanguageDropdownWidget(),
           ),
           Container(
-            width: 100,
+            width: 110,
             margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
             child: SongNumberSearchWidget(),
           ),
