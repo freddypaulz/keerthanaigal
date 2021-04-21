@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keerthanaigal/pages/favorites/index.dart';
+import 'package:keerthanaigal/pages/search/index.dart';
 import 'package:keerthanaigal/pages/settings/index.dart';
 import 'package:keerthanaigal/theme/colors.dart';
 import '../home/index.dart';
@@ -39,6 +40,7 @@ class _MainPageState extends State<MainPage> {
   List<GlobalKey<NavigatorState>> _navigatorKeys = [
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>()
   ];
   @override
@@ -58,6 +60,7 @@ class _MainPageState extends State<MainPage> {
               _buildOffstageNavigator(0),
               _buildOffstageNavigator(1),
               _buildOffstageNavigator(2),
+              _buildOffstageNavigator(3),
             ],
           ),
         ),
@@ -65,6 +68,7 @@ class _MainPageState extends State<MainPage> {
         //   height: 50,
         // ),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _selectedIndex,
           onTap: (index) {
             setState(() {
@@ -75,6 +79,8 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.music_note_rounded), label: 'Songs'),
             BottomNavigationBarItem(
+                icon: Icon(Icons.search_rounded), label: 'Search'),
+            BottomNavigationBarItem(
                 icon: Icon(Icons.favorite_rounded), label: 'Favorites'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.settings_rounded), label: 'Settings'),
@@ -82,6 +88,7 @@ class _MainPageState extends State<MainPage> {
           backgroundColor: Theme.of(context).primaryColor,
           selectedItemColor: Theme.of(context).accentColor,
           unselectedItemColor: Theme.of(context).textTheme.bodyText1?.color,
+          showUnselectedLabels: true,
         ),
       ),
     );
@@ -92,6 +99,7 @@ class _MainPageState extends State<MainPage> {
       '/': (context) {
         return [
           HomePage(),
+          SearchPage(),
           FavoritesPage(),
           SettingsPage(),
         ].elementAt(index);

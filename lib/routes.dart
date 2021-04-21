@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keerthanaigal/pages/main/index.dart';
 import 'pages/home/index.dart';
 import 'pages/onboarding/index.dart';
+import 'pages/search/index.dart';
 import 'pages/songView/index.dart';
 
 class Routes {
@@ -9,6 +10,7 @@ class Routes {
 
   static const String mainPage = '/';
   static const String homePage = '/home';
+  static const String searchPage = '/search';
   static const String onboardingPage = '/onboarding';
   static const String songViewPage = '/songView';
 
@@ -17,6 +19,10 @@ class Routes {
       case Routes.mainPage:
         return MaterialPageRoute<dynamic>(
           builder: (_) => MainPage(),
+        );
+      case Routes.mainPage:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => SearchPage(),
         );
       case Routes.homePage:
         return MaterialPageRoute<dynamic>(

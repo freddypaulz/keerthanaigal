@@ -14,6 +14,7 @@ class SongState extends ChangeNotifier {
   }
 
   SongList songList;
+  List<SongModel> songSearchList = [];
   List<String> favoriteList = [];
   int songViewId;
 
@@ -48,6 +49,35 @@ class SongState extends ChangeNotifier {
   removeFavorite(int songNumber) async {
     favoriteList.remove(songNumber.toString());
     await FavoriteSongPreference().setFavoriteSongList(favoriteList);
+    notifyListeners();
+  }
+
+  getSongSearchResults(String searchKey) {
+    print(searchKey);
+    if (searchKey.length > 0) {
+      songSearchList = songList.songs.where((element) {
+        return element.tanglish.title
+                .toLowerCase()
+                .contains(searchKey.toLowerCase()) ||
+            element.tamil.title.toLowerCase().contains(searchKey) ||
+            element.number.toString() == searchKey;
+      }).toList();
+
+      // songList.songs.forEach((song) {
+      //   print('1');
+
+      //   song.tanglish.content.forEach((element) {
+      //     print('2');
+
+      //     if (element.contains(searchKey)) {
+      //       print('found');
+      //       songSearchList.add(song);
+      //     }
+      //   });
+      // });
+    } else {
+      songSearchList = [];
+    }
     notifyListeners();
   }
 }

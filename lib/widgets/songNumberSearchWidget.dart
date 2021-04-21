@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/pages/songView/index.dart';
 import 'package:keerthanaigal/providers/song_provider.dart';
+import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/theme/colors.dart';
 import 'package:keerthanaigal/widgets/TextWidget.dart';
 
@@ -13,6 +14,7 @@ class SongNumberSearchWidget extends ConsumerWidget {
   Widget build(BuildContext context, watch) {
     final _controller = TextEditingController();
     SongState songsProviderData = watch(SongsProvider);
+    var uiProviderData = watch(UiProvider);
 
     handleSongNoSearch(String value) {
       int songIndex = songsProviderData.songList.songs
@@ -60,6 +62,7 @@ class SongNumberSearchWidget extends ConsumerWidget {
       style: TextStyle(
         color: Theme.of(context).textTheme.bodyText1?.color,
       ),
+      cursorColor: Theme.of(context).textTheme.bodyText1?.color,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.all(5.0),
@@ -67,15 +70,18 @@ class SongNumberSearchWidget extends ConsumerWidget {
         hintStyle: TextStyle(
           color: Theme.of(context).textTheme.bodyText1?.color,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).accentColor,
-          ),
-        ),
+        fillColor: uiProviderData.theme == 0
+            ? KThemeData.colorDark.shade50
+            : uiProviderData.theme == 1
+                ? KThemeData.colorLight.shade50
+                : MediaQuery.of(context).platformBrightness == Brightness.dark
+                    ? KThemeData.colorLight.shade50
+                    : KThemeData.colorDark.shade50,
+        filled: true,
+        enabledBorder: InputBorder.none,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).accentColor,
-            width: 2.0,
           ),
         ),
       ),

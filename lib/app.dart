@@ -20,9 +20,10 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         primarySwatch: KThemeData.colorLight,
         accentColor: KThemeData.colorLightAccent,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: KThemeData.colorLight.shade500,
         textTheme: TextTheme(
           bodyText1: TextStyle(color: Colors.black54),
+          bodyText2: TextStyle(color: Colors.black38),
         ),
       ),
       darkTheme: ThemeData(
@@ -31,6 +32,7 @@ class MyApp extends ConsumerWidget {
         scaffoldBackgroundColor: KThemeData.colorDark.shade500,
         textTheme: TextTheme(
           bodyText1: TextStyle(color: Colors.white70),
+          bodyText2: TextStyle(color: Colors.white54),
         ),
       ),
       themeMode: uiProviderData.theme == 2
