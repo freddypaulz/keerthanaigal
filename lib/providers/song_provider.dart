@@ -13,10 +13,11 @@ class SongState extends ChangeNotifier {
     getFavoriteList();
   }
 
-  SongList songList;
-  List<SongModel> songSearchList = [];
-  List<String> favoriteList = [];
   int songViewId;
+  SongList songList;
+  List<String> favoriteList = [];
+  List<SongModel> songSearchList = [];
+  String searchResultText = '';
 
   getSongs() async {
     List<dynamic> parsedJson = await loadJson();
@@ -79,23 +80,13 @@ class SongState extends ChangeNotifier {
                 .contains(searchKey.toLowerCase()) ||
             element.tamil.title.contains(searchKey) ||
             element.number.toString() == searchKey ||
-            songContentSearch(element.tanglish.content, searchKey);
+            songContentSearch(element.tanglish.content, searchKey) ||
+            songContentSearch(element.tamil.content, searchKey);
       }).toList();
-
-      // songList.songs.forEach((song) {
-      //   print('1');
-
-      //   song.tanglish.content.forEach((element) {
-      //     print('2');
-
-      //     if (element.contains(searchKey)) {
-      //       print('found');
-      //       songSearchList.add(song);
-      //     }
-      //   });
-      // });
+      if (songSearchList.length == 0) searchResultText = 'No song found 🧐';
     } else {
       songSearchList = [];
+      searchResultText = '';
     }
     notifyListeners();
   }

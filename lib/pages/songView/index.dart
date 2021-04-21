@@ -126,6 +126,13 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
         removeFocus(context);
       },
       child: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_rounded),
+          color: Theme.of(context).accentColor,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         actions: [
           Container(
             width: 110,

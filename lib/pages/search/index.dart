@@ -44,7 +44,7 @@ class _SearchBarState extends State<SearchBar> {
             ),
             cursorColor: Theme.of(context).accentColor,
             decoration: InputDecoration(
-              hintText: 'title, song lyrics, number',
+              hintText: 'Song title, lyrics, number',
               hintStyle: TextStyle(
                 color: Theme.of(context).textTheme.bodyText2?.color,
                 fontWeight: FontWeight.normal,
@@ -90,40 +90,49 @@ class SearchResults extends ConsumerWidget {
     SongState songsProviderData = watch(SongsProvider);
     UiState uiProviderData = watch(UiProvider);
 
-    return Container(
-      height: 200,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          int id = songsProviderData.songSearchList[index].id;
-          String title = uiProviderData.language == 0
-              ? songsProviderData.songSearchList[index].tamil.title
-              : songsProviderData.songSearchList[index].tanglish.title;
+    return count != 0
+        ? Expanded(
+            child: ListView.builder(
+              // shrinkWrap: true,
+              itemBuilder: (context, index) {
+                int id = songsProviderData.songSearchList[index].id;
+                String title = uiProviderData.language == 0
+                    ? songsProviderData.songSearchList[index].tamil.title
+                    : songsProviderData.songSearchList[index].tanglish.title;
 
-          return InkWell(
-            onTap: () {
-              songsProviderData.setSongId(id);
-              Navigator.push(
-                  context,
-                  // Routes.songViewPage,
-                  MaterialPageRoute(builder: (context) => SongViewPage()));
-            },
-            child: Container(
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              margin: EdgeInsets.all(5),
-              child: Text(
-                '$id. $title',
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1?.color,
-                  fontSize: uiProviderData.fontSize,
-                ),
-              ),
+                return InkWell(
+                  onTap: () {
+                    songsProviderData.setSongId(id);
+                    Navigator.push(
+                        context,
+                        // Routes.songViewPage,
+                        MaterialPageRoute(
+                            builder: (context) => SongViewPage()));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    margin: EdgeInsets.all(5),
+                    child: Text(
+                      '${index + 1}. $title',
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1?.color,
+                        fontSize: uiProviderData.fontSize,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              itemCount: count,
+              physics: BouncingScrollPhysics(),
+            ),
+          )
+        : Text(
+            songsProviderData.searchResultText,
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodyText1?.color,
+              fontSize: 20,
             ),
           );
-        },
-        itemCount: count,
-        physics: BouncingScrollPhysics(),
-      ),
-    );
   }
 }
 

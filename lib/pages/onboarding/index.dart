@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/layout/index.dart';
 import 'package:keerthanaigal/pages/main/index.dart';
 import 'package:keerthanaigal/pages/settings/widgets/fontSizeSlider.dart';
 import 'package:keerthanaigal/pages/settings/widgets/themeToggle.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
-import 'package:keerthanaigal/routes.dart';
 import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 import '../../utilities/firstTimeVisitChecker.dart';
@@ -207,7 +206,7 @@ class AboutScreen extends StatelessWidget {
           height: 50,
         ),
         Text(
-          'Welcome to the book of Keethanaigal',
+          'Welcome to the Keethanaigal App',
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1!.color,
             fontSize: 20,
@@ -221,7 +220,7 @@ class AboutScreen extends StatelessWidget {
         Container(
           width: 500,
           child: Text(
-            'Our mission is to bring these classic songs to the community in a modern way with all the new features an app can provide. By the immense Grace of our Holy Father, the Keethanaigal app brings over 700 classic songs from the book of Geethangalum Keethanaigalum',
+            'Our mission is to bring these classic songs to the community in a modern way with all the new features that an app can provide. By the immense Grace of our Holy Father, the Keethanaigal app brings over 700 classic songs from the book of Geethangal and Keethanaigal.',
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyText1!.color,
               fontSize: 20,
