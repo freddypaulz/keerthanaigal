@@ -52,6 +52,24 @@ class SongState extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool songContentSearch(List<List<String>> content, String searchKey) {
+    bool found = false;
+    print('hi');
+
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        print(content[i][j].toLowerCase());
+        if (content[i][j].toLowerCase().contains(searchKey.toLowerCase())) {
+          print('found');
+          found = true;
+          break;
+        }
+      }
+    }
+    print(found);
+    return found;
+  }
+
   getSongSearchResults(String searchKey) {
     print(searchKey);
     if (searchKey.length > 0) {
@@ -59,8 +77,9 @@ class SongState extends ChangeNotifier {
         return element.tanglish.title
                 .toLowerCase()
                 .contains(searchKey.toLowerCase()) ||
-            element.tamil.title.toLowerCase().contains(searchKey) ||
-            element.number.toString() == searchKey;
+            element.tamil.title.contains(searchKey) ||
+            element.number.toString() == searchKey ||
+            songContentSearch(element.tanglish.content, searchKey);
       }).toList();
 
       // songList.songs.forEach((song) {

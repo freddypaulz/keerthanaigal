@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/layout/index.dart';
@@ -15,6 +17,7 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   String searchKey = '';
+  Timer? _debounce;
   var _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,10 @@ class _SearchBarState extends State<SearchBar> {
               setState(() {
                 searchKey = value;
               });
-              songProviderData.getSongSearchResults(searchKey);
+              if (_debounce?.isActive ?? false) _debounce?.cancel();
+              _debounce = Timer(const Duration(milliseconds: 1000), () {
+                songProviderData.getSongSearchResults(searchKey);
+              });
             },
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyText1?.color,
@@ -66,6 +72,12 @@ class _SearchBarState extends State<SearchBar> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 }
 
