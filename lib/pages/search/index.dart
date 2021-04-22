@@ -7,6 +7,7 @@ import 'package:keerthanaigal/pages/songView/index.dart';
 import 'package:keerthanaigal/providers/song_provider.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/theme/colors.dart';
+import 'package:keerthanaigal/widgets/heartRive.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -126,12 +127,27 @@ class SearchResults extends ConsumerWidget {
               physics: BouncingScrollPhysics(),
             ),
           )
-        : Text(
-            songsProviderData.searchResultText,
-            style: TextStyle(
-              color: Theme.of(context).textTheme.bodyText1?.color,
-              fontSize: 20,
-            ),
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                songsProviderData.searchResultText,
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText1?.color,
+                  fontSize: 20,
+                ),
+              ),
+              songsProviderData.searchResultText != ''
+                  ? Container(
+                      height: 100,
+                      width: 100,
+                      child: RiveAnimation(
+                        animationName: 'Monocle blink',
+                        riveFileName: 'assets/flare/monocle_blink.riv',
+                      ),
+                    )
+                  : Container()
+            ],
           );
   }
 }

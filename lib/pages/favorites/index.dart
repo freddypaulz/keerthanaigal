@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/models/song_model.dart';
+import 'package:keerthanaigal/widgets/heartRive.dart';
 import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
 import '../songView/index.dart';
@@ -71,12 +72,25 @@ class SongListView extends ConsumerWidget {
             physics: BouncingScrollPhysics(),
           )
         : Center(
-            child: Text(
-              'oops! no favorites yet 💔',
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodyText1?.color,
-                fontSize: 20,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'oops! no favorites yet',
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyText1?.color,
+                    fontSize: 20,
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  width: 100,
+                  child: RiveAnimation(
+                    animationName: 'Heart broken',
+                    riveFileName: 'assets/flare/heart_broken.riv',
+                  ),
+                )
+              ],
             ),
           );
   }

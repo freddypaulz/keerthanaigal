@@ -55,19 +55,18 @@ class SongState extends ChangeNotifier {
 
   bool songContentSearch(List<List<String>> content, String searchKey) {
     bool found = false;
-    print('hi');
+    // print('hi');
 
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
-        print(content[i][j].toLowerCase());
+        // print(content[i][j].toLowerCase());
         if (content[i][j].toLowerCase().contains(searchKey.toLowerCase())) {
-          print('found');
+          // print('found');
           found = true;
           break;
         }
       }
     }
-    print(found);
     return found;
   }
 
@@ -83,7 +82,7 @@ class SongState extends ChangeNotifier {
             songContentSearch(element.tanglish.content, searchKey) ||
             songContentSearch(element.tamil.content, searchKey);
       }).toList();
-      if (songSearchList.length == 0) searchResultText = 'No song found 🧐';
+      if (songSearchList.length == 0) searchResultText = 'No song found';
     } else {
       songSearchList = [];
       searchResultText = '';
