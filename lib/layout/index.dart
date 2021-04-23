@@ -22,7 +22,6 @@ class Layout extends StatelessWidget {
       // backgroundColor: Colors.grey[200],
       appBar: appBar,
       body: Container(
-        width: double.infinity,
         padding: const EdgeInsets.all(16),
         child: body,
       ),

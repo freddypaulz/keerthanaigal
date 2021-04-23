@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/models/song_model.dart';
-import 'package:keerthanaigal/widgets/heartRive.dart';
+import 'package:keerthanaigal/widgets/RiveAnimation.dart';
 import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
 import '../songView/index.dart';

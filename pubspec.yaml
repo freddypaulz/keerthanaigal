@@ -48,6 +48,7 @@ flutter:
       - assets/songs.json
       - assets/flare/heart_broken.riv
       - assets/flare/monocle_blink.riv
+      - assets/flare/book_flip.riv
    # fonts:
    #   - family: Schyler
    #     fonts:

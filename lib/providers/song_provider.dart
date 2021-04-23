@@ -18,11 +18,18 @@ class SongState extends ChangeNotifier {
   List<String> favoriteList = [];
   List<SongModel> songSearchList = [];
   String searchResultText = '';
+  bool isLoading = false;
+
+  setLoader(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
 
   getSongs() async {
+    setLoader(true);
     List<dynamic> parsedJson = await loadJson();
     this.songList = SongList.fromJson(parsedJson);
-    notifyListeners();
+    setLoader(false);
   }
 
   Future<List<dynamic>> loadJson() async {
@@ -36,9 +43,11 @@ class SongState extends ChangeNotifier {
   }
 
   getFavoriteList() async {
+    // setLoader(true);
+
     this.favoriteList =
         await FavoriteSongPreference().getFavoriteSongList() ?? [];
-    notifyListeners();
+    // setLoader(false);
   }
 
   setFavoriteList(int songNumber) async {
@@ -71,8 +80,9 @@ class SongState extends ChangeNotifier {
   }
 
   getSongSearchResults(String searchKey) {
-    print(searchKey);
     if (searchKey.length > 0) {
+      setLoader(true);
+      print('loader: true');
       songSearchList = songList.songs.where((element) {
         return element.tanglish.title
                 .toLowerCase()
@@ -87,7 +97,8 @@ class SongState extends ChangeNotifier {
       songSearchList = [];
       searchResultText = '';
     }
-    notifyListeners();
+    setLoader(false);
+    print('loader: false');
   }
 }
 
