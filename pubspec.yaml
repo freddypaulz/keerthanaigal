@@ -49,6 +49,7 @@ flutter:
       - assets/flare/heart_broken.riv
       - assets/flare/monocle_blink.riv
       - assets/flare/book_flip.riv
+      - assets/flare/book_open.riv
    # fonts:
    #   - family: Schyler
    #     fonts:

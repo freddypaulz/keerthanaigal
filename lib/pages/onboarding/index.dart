@@ -6,6 +6,7 @@ import 'package:keerthanaigal/pages/settings/widgets/fontSizeSlider.dart';
 import 'package:keerthanaigal/pages/settings/widgets/themeToggle.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
+import 'package:keerthanaigal/widgets/RiveAnimation.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 import '../../utilities/firstTimeVisitChecker.dart';
 
@@ -20,6 +21,7 @@ class _OnBoardingState extends State<OnBoarding> {
   var _controller = new PageController(initialPage: 0);
   int _numPages = 5;
   int _currentPage = 0;
+  double _opacity = 0;
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
@@ -44,6 +46,15 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        _opacity = 1;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Layout(
@@ -54,29 +65,54 @@ class _OnBoardingState extends State<OnBoarding> {
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
             ),
-            child: Container(
-              height: 600,
-              child: NotificationListener<OverscrollIndicatorNotification>(
-                onNotification: (overscroll) {
-                  overscroll.disallowGlow();
-                  return true;
-                },
-                child: PageView(
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3,
+                  width: 300,
+                  child: RiveAnimation(
+                    riveFileName: 'assets/flare/book_open.riv',
+                    animationName: 'Book open',
+                    secondAnimationName: 'Cross hover',
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 300,
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification: (overscroll) {
+                      overscroll.disallowGlow();
+                      return true;
                     },
-                    controller: _controller,
-                    physics: CustomPageViewScrollPhysics(),
-                    children: [
-                      VerseScreen(),
-                      AboutScreen(),
-                      LanguageScreen(),
-                      FontSizeScreen(),
-                      ThemeScreen(),
-                    ]),
-              ),
+                    child: PageView(
+                        onPageChanged: (int page) {
+                          setState(() {
+                            _currentPage = page;
+                          });
+                        },
+                        controller: _controller,
+                        physics: CustomPageViewScrollPhysics(),
+                        children: [
+                          AnimatedOpacity(
+                            opacity: _opacity,
+                            duration: Duration(
+                              milliseconds: 4000,
+                            ),
+                            child: VerseScreen(),
+                          ),
+                          AboutScreen(),
+                          LanguageScreen(),
+                          FontSizeScreen(),
+                          ThemeScreen(),
+                        ]),
+                  ),
+                ),
+              ],
             ),
           ),
           Row(
@@ -95,20 +131,17 @@ class _OnBoardingState extends State<OnBoarding> {
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed))
                             return Theme.of(context).primaryColor;
-                          return Theme.of(context)
-                              .accentColor; // Use the component's default.
+                          return Theme.of(context).accentColor;
                         },
                       ),
                     ),
                     onPressed: () {
-                      // Navigator.pushNamed(context, Routes.mainPage);
                       if (_currentPage == 3) {
                         double value =
                             context.read(UiProvider).getTempFontSize();
                         context.read(UiProvider).changeFontSize(value);
                       }
                       if (_currentPage == _numPages - 1) {
-                        // Navigator.pushNamed(context, Routes.mainPage);
                         visit.changeFirstTime();
                         Navigator.pushReplacement(
                           context,
@@ -148,17 +181,6 @@ class VerseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 50,
-        ),
-        Image.asset(
-          'assets/logo.png',
-          width: 200,
-          height: 200,
-        ),
-        SizedBox(
-          height: 50,
-        ),
         Text(
           '"I will sing of the Lord’s great love forever; with my mouth I will make your faithfulness known through all generations."',
           style: TextStyle(
@@ -194,19 +216,8 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 50,
-        ),
-        Image.asset(
-          'assets/logo.png',
-          width: 200,
-          height: 200,
-        ),
-        SizedBox(
-          height: 50,
-        ),
         Text(
-          'Welcome to the Keethanaigal App',
+          'Welcome to the Keerthanaigal App',
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1!.color,
             fontSize: 20,
@@ -243,19 +254,8 @@ class LanguageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 50,
-        ),
-        Image.asset(
-          'assets/logo.png',
-          width: 200,
-          height: 200,
-        ),
-        SizedBox(
-          height: 50,
-        ),
         Text(
-          'Choose a song language',
+          'Choose song language',
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1!.color,
             fontSize: 20,
@@ -284,17 +284,6 @@ class FontSizeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 50,
-        ),
-        Image.asset(
-          'assets/logo.png',
-          width: 200,
-          height: 200,
-        ),
-        SizedBox(
-          height: 50,
-        ),
         Text(
           'Choose song font size',
           style: TextStyle(
@@ -325,17 +314,6 @@ class ThemeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 50,
-        ),
-        Image.asset(
-          'assets/logo.png',
-          width: 200,
-          height: 200,
-        ),
-        SizedBox(
-          height: 50,
-        ),
         Text(
           'Choose application theme',
           style: TextStyle(

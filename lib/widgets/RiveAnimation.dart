@@ -3,25 +3,37 @@ import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 
 class RiveAnimation extends StatefulWidget {
-  RiveAnimation({required this.riveFileName, required this.animationName});
+  RiveAnimation({
+    required this.riveFileName,
+    required this.animationName,
+    this.secondAnimationName,
+  });
+
   final String riveFileName;
   final String animationName;
+  final String? secondAnimationName;
 
   @override
   _RiveAnimationState createState() => _RiveAnimationState(
         animationName: animationName,
         riveFileName: riveFileName,
+        secondAnimationName: secondAnimationName,
       );
 }
 
 class _RiveAnimationState extends State<RiveAnimation> {
-  _RiveAnimationState(
-      {required this.riveFileName, required this.animationName});
+  _RiveAnimationState({
+    required this.riveFileName,
+    required this.animationName,
+    this.secondAnimationName,
+  });
 
   String riveFileName;
   String animationName;
+  String? secondAnimationName;
 
   Artboard? _artboard;
+  RiveAnimationController? _controller;
 
   @override
   void initState() {
@@ -35,10 +47,20 @@ class _RiveAnimationState extends State<RiveAnimation> {
     final file = RiveFile.import(bytes);
     if (this.mounted) {
       // check whether the state object is in tree
-      setState(() => _artboard = file.mainArtboard
-        ..addController(
-          SimpleAnimation(animationName),
-        ));
+      setState(
+        () => _artboard = file.mainArtboard
+          ..addController(
+            SimpleAnimation(animationName),
+          ),
+      );
+
+      if (secondAnimationName != null) {
+        print('in');
+        _artboard?.addController(
+          _controller = SimpleAnimation(secondAnimationName!),
+        );
+        setState(() => _controller?.isActive = true);
+      }
     }
   }
 
