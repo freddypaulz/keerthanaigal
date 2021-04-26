@@ -5,6 +5,7 @@ import 'package:keerthanaigal/pages/songView/index.dart';
 import 'package:keerthanaigal/providers/song_provider.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/theme/colors.dart';
+import 'package:keerthanaigal/widgets/RiveAnimation.dart';
 import 'package:keerthanaigal/widgets/TextWidget.dart';
 
 class SongNumberSearchWidget extends ConsumerWidget {
@@ -17,39 +18,55 @@ class SongNumberSearchWidget extends ConsumerWidget {
     var uiProviderData = watch(UiProvider);
 
     handleSongNoSearch(String value) {
-      int songIndex = songsProviderData.songList.songs
-          .indexWhere((element) => element.number == int.parse(value));
-      if (songIndex != -1) {
-        songsProviderData.setSongId(int.parse(value));
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SongViewPage()),
-        );
-      } else {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                backgroundColor: Theme.of(context).primaryColor,
-                content: SingleChildScrollView(
-                  child: TextWidget('No song found for that number!'),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text(
-                      'Got it!',
-                      style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                      ),
+      if (value.isNotEmpty) {
+        int songIndex = songsProviderData.songList.songs
+            .indexWhere((element) => element.number == int.parse(value));
+        if (songIndex != -1) {
+          songsProviderData.setSongId(int.parse(value));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SongViewPage()),
+          );
+        } else {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  content: SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextWidget('oops! song not found'),
+                        Container(
+                          height: 50,
+                          width: 50,
+                          child: RiveAnimation(
+                            animationName: 'Monocle blink',
+                            riveFileName: 'assets/flare/monocle_blink.riv',
+                          ),
+                        )
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
                   ),
-                ],
-              );
-            });
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text(
+                        'Got it!',
+                        style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              });
+        }
       }
+
       _controller.clear();
     }
 

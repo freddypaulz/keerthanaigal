@@ -55,7 +55,6 @@ class _RiveAnimationState extends State<RiveAnimation> {
       );
 
       if (secondAnimationName != null) {
-        print('in');
         _artboard?.addController(
           _controller = SimpleAnimation(secondAnimationName!),
         );

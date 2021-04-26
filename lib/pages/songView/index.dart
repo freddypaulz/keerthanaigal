@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/theme/colors.dart';
 import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
+import 'package:keerthanaigal/utilities/removeFocus.dart';
 import 'package:keerthanaigal/widgets/TextWidget.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 import 'package:keerthanaigal/widgets/songNumberSearchWidget.dart';
@@ -114,16 +115,11 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const KAppBar({Key? key, required this.height});
 
-  removeFocus(context) {
-    FocusScope.of(context).unfocus();
-    new TextEditingController().clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        removeFocus(context);
+        RemoveFocus.removeFocus(context);
       },
       child: AppBar(
         leading: IconButton(

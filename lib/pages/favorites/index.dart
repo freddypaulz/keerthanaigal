@@ -6,6 +6,8 @@ import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
 import '../songView/index.dart';
 import 'package:keerthanaigal/layout/index.dart';
+import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
+import 'package:keerthanaigal/widgets/songNumberSearchWidget.dart';
 
 class Favorites extends StatelessWidget {
   const Favorites({Key? key}) : super(key: key);
@@ -72,7 +74,7 @@ class SongListView extends ConsumerWidget {
             physics: BouncingScrollPhysics(),
           )
         : Center(
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -83,8 +85,8 @@ class SongListView extends ConsumerWidget {
                   ),
                 ),
                 Container(
-                  height: 100,
-                  width: 100,
+                  height: 50,
+                  width: 50,
                   child: RiveAnimation(
                     animationName: 'Heart broken',
                     riveFileName: 'assets/flare/heart_broken.riv',
@@ -110,7 +112,19 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Theme.of(context).textTheme.bodyText1?.color,
         ),
       ),
-      centerTitle: true,
+      actions: [
+        Container(
+          width: 100,
+          margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
+          child: LanguageDropdownWidget(),
+        ),
+        Container(
+          width: 110,
+          margin: EdgeInsets.only(top: 10, bottom: 8, right: 8),
+          child: SongNumberSearchWidget(),
+        ),
+      ],
+      // centerTitle: true,
     );
   }
 

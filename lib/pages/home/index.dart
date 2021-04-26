@@ -8,6 +8,7 @@ import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
 import '../songView/index.dart';
 import 'package:keerthanaigal/widgets/RiveAnimation.dart';
+import 'package:keerthanaigal/utilities/removeFocus.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -77,22 +78,18 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const KAppBar({Key? key, required this.height});
 
-  removeFocus(context) {
-    FocusScope.of(context).unfocus();
-    new TextEditingController().clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        removeFocus(context);
+        RemoveFocus.removeFocus(context);
       },
       child: AppBar(
         title: Text(
           'Keerthanaigal',
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1?.color,
+            fontSize: 18,
           ),
         ),
         actions: [

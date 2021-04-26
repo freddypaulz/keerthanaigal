@@ -36,7 +36,6 @@ class _LanguageDropdownWidgetState extends State<LanguageDropdownWidget> {
           hint: dropdownTextWidget('Language'),
           value: uiProviderData.language,
           onChanged: (int? value) {
-            print(value);
             context.read(UiProvider).changeSongLanguage(value!);
           },
           underline: underline == null ? SizedBox() : null,
