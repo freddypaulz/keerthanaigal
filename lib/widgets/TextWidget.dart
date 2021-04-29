@@ -13,6 +13,7 @@ class TextWidget extends ConsumerWidget {
       style: TextStyle(
         color: Theme.of(context).textTheme.bodyText1?.color,
         fontSize: uiProviderData.fontSize,
+        fontFamily: uiProviderData.language == 0 ? 'Arima' : 'SourceSansPro',
       ),
       textAlign: TextAlign.center,
     );

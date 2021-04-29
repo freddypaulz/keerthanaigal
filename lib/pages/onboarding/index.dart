@@ -4,173 +4,10 @@ import 'package:keerthanaigal/layout/index.dart';
 import 'package:keerthanaigal/pages/main/index.dart';
 import 'package:keerthanaigal/pages/settings/widgets/fontSizeSlider.dart';
 import 'package:keerthanaigal/pages/settings/widgets/themeToggle.dart';
-import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
 import 'package:keerthanaigal/widgets/RiveAnimation.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 import '../../utilities/firstTimeVisitChecker.dart';
-
-class OnBoarding extends StatefulWidget {
-  @override
-  _OnBoardingState createState() => _OnBoardingState();
-}
-
-class _OnBoardingState extends State<OnBoarding> {
-  final FirstTimeVisitChecker visit = FirstTimeVisitChecker();
-
-  var _controller = new PageController(initialPage: 0);
-  int _numPages = 5;
-  int _currentPage = 0;
-  double _opacity = 0;
-
-  List<Widget> _buildPageIndicator() {
-    List<Widget> list = [];
-    for (int i = 0; i < _numPages; i++) {
-      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
-    }
-    return list;
-  }
-
-  Widget _indicator(bool isActive) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      height: 8.0,
-      width: isActive ? 24.0 : 16.0,
-      decoration: BoxDecoration(
-        color: isActive
-            ? Theme.of(context).textTheme.bodyText1?.color
-            : Theme.of(context).accentColor,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
-    );
-  }
-
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      setState(() {
-        _opacity = 1;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Layout(
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 50,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 3,
-                  width: 300,
-                  child: RiveAnimation(
-                    riveFileName: 'assets/flare/book_open.riv',
-                    animationName: 'Book open',
-                    secondAnimationName: 'Cross hover',
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 300,
-                  child: NotificationListener<OverscrollIndicatorNotification>(
-                    onNotification: (overscroll) {
-                      overscroll.disallowGlow();
-                      return true;
-                    },
-                    child: PageView(
-                        onPageChanged: (int page) {
-                          setState(() {
-                            _currentPage = page;
-                          });
-                        },
-                        controller: _controller,
-                        physics: CustomPageViewScrollPhysics(),
-                        children: [
-                          AnimatedOpacity(
-                            opacity: _opacity,
-                            duration: Duration(
-                              milliseconds: 4000,
-                            ),
-                            child: VerseScreen(),
-                          ),
-                          AboutScreen(),
-                          LanguageScreen(),
-                          FontSizeScreen(),
-                          ThemeScreen(),
-                        ]),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildPageIndicator(),
-          ),
-          Consumer(
-            builder: (context, watch, child) {
-              return Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.pressed))
-                            return Theme.of(context).primaryColor;
-                          return Theme.of(context).accentColor;
-                        },
-                      ),
-                    ),
-                    onPressed: () {
-                      if (_currentPage == 3) {
-                        double value =
-                            context.read(UiProvider).getTempFontSize();
-                        context.read(UiProvider).changeFontSize(value);
-                      }
-                      if (_currentPage == _numPages - 1) {
-                        visit.changeFirstTime();
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainPage(),
-                          ),
-                        );
-                      }
-                      _controller.nextPage(
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: Text(
-                      _currentPage != _numPages - 1 ? 'Next' : 'Finish',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class VerseScreen extends StatelessWidget {
   const VerseScreen({
@@ -229,15 +66,16 @@ class AboutScreen extends StatelessWidget {
           height: 20,
         ),
         Container(
-          width: 500,
+          width: MediaQuery.of(context).size.width,
           child: Text(
-            'Our mission is to bring these classic songs to the community in a modern way with all the new features that an app can provide. By the immense Grace of our Holy Father, the Keethanaigal app brings over 700 classic songs from the book of Geethangal and Keethanaigal.',
+            'By the immense Grace of our Holy Father, the Keerthanaigal app brings over 700 classic songs from the book of Geethangal and Keerthanaigal.',
+            // 'Our mission is to bring these classic songs to the community in a modern way with all the new features that an app can provide. By the immense Grace of our Holy Father, the Keethanaigal app brings over 700 classic songs from the book of Geethangal and Keethanaigal.',
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyText1!.color,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.center,
           ),
         ),
       ],
@@ -268,7 +106,9 @@ class LanguageScreen extends StatelessWidget {
         ),
         Container(
           width: 280,
-          child: LanguageDropdownWidget(underline: true),
+          child: LanguageDropdownWidget(
+            underline: true,
+          ),
         )
       ],
     );
@@ -323,14 +163,209 @@ class ThemeScreen extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        SizedBox(
-          height: 20,
-        ),
         Container(
           width: 280,
           child: ThemeToggle(),
         )
       ],
+    );
+  }
+}
+
+class OnBoarding extends StatefulWidget {
+  @override
+  _OnBoardingState createState() => _OnBoardingState();
+}
+
+class _OnBoardingState extends State<OnBoarding> {
+  final FirstTimeVisitChecker visit = FirstTimeVisitChecker();
+
+  var _controller = new PageController(initialPage: 0);
+  int _numPages = 5;
+  int _currentPage = 0;
+  double _opacity = 0;
+  Widget? _actionButton;
+
+  _handleShapeChange(String value) {
+    setState(() {
+      _actionButton = value == 'rectangle' ? rectangleButton() : roundButton();
+    });
+  }
+
+  List<Widget> _buildPageIndicator() {
+    List<Widget> list = [];
+    for (int i = 0; i < _numPages; i++) {
+      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
+    }
+    return list;
+  }
+
+  Widget _indicator(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      height: 8.0,
+      width: isActive ? 24.0 : 16.0,
+      decoration: BoxDecoration(
+        color: isActive
+            ? Theme.of(context).textTheme.bodyText1?.color
+            : Theme.of(context).accentColor,
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
+    );
+  }
+
+  _handleNext() {
+    if (_currentPage == _numPages - 1) {
+      visit.changeFirstTime();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainPage(),
+        ),
+      );
+    }
+    _controller.nextPage(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+  }
+
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        _opacity = 1;
+        _actionButton = rectangleButton();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Layout(
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3,
+                  width: (MediaQuery.of(context).size.width / 4) * 3,
+                  child: RiveAnimation(
+                    riveFileName: 'assets/flare/book_open.riv',
+                    animationName: 'Book open',
+                    secondAnimationName: 'Cross hover',
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification: (overscroll) {
+                      overscroll.disallowGlow();
+                      return true;
+                    },
+                    child: PageView(
+                        onPageChanged: (int page) {
+                          setState(() {
+                            _currentPage = page;
+                          });
+                          _currentPage != _numPages - 1
+                              ? _handleShapeChange('rectangle')
+                              : _handleShapeChange('circle');
+                        },
+                        controller: _controller,
+                        physics: CustomPageViewScrollPhysics(),
+                        children: [
+                          AnimatedOpacity(
+                            opacity: _opacity,
+                            duration: Duration(
+                              milliseconds: 4000,
+                            ),
+                            child: VerseScreen(),
+                          ),
+                          AboutScreen(),
+                          LanguageScreen(),
+                          FontSizeScreen(),
+                          ThemeScreen(),
+                        ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _buildPageIndicator(),
+          ),
+          Consumer(
+            builder: (context, watch, child) {
+              return Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 300),
+                    child: _actionButton,
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return ScaleTransition(
+                        scale: animation,
+                        child: child,
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget rectangleButton() {
+    return ElevatedButton(
+      key: Key('1'),
+      style: ElevatedButton.styleFrom(
+          shape: ContinuousRectangleBorder(),
+          primary: Theme.of(context).accentColor,
+          onPrimary: Colors.white70,
+          textStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          )),
+      onPressed: _handleNext,
+      child: Text('Next'),
+    );
+  }
+
+  Widget roundButton() {
+    return ElevatedButton(
+      key: Key('2'),
+      style: ElevatedButton.styleFrom(
+        shape: CircleBorder(),
+        primary: Theme.of(context).accentColor,
+        onPrimary: Colors.white70,
+        padding: EdgeInsets.all(10),
+      ),
+      onPressed: _handleNext,
+      child: Icon(
+        Icons.keyboard_arrow_right_rounded,
+        size: 30,
+      ),
     );
   }
 }

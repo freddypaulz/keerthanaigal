@@ -131,6 +131,9 @@ class SearchResults extends ConsumerWidget {
                                       .bodyText1
                                       ?.color,
                                   fontSize: uiProviderData.fontSize,
+                                  fontFamily: uiProviderData.language == 0
+                                      ? 'Arima'
+                                      : 'SourceSansPro',
                                 ),
                               ),
                             ),

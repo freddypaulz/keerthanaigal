@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/pages/main/index.dart';
+import 'package:keerthanaigal/pages/onboarding/index.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
 
 import 'routes.dart';
@@ -34,14 +36,14 @@ class MyApp extends ConsumerWidget {
           bodyText1: TextStyle(color: Colors.white70),
           bodyText2: TextStyle(color: Colors.white54),
         ),
+        fontFamily: 'SourceSansPro',
       ),
       themeMode: uiProviderData.theme == 2
           ? ThemeMode.system
           : uiProviderData.theme == 1
               ? ThemeMode.dark
               : ThemeMode.light,
-      initialRoute:
-          firstTimeVisit == true ? Routes.onboardingPage : Routes.mainPage,
+      home: firstTimeVisit == true ? OnBoarding() : MainPage(),
       onGenerateRoute: Routes.generateRoutes,
       debugShowCheckedModeBanner: false,
     );

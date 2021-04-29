@@ -39,7 +39,13 @@ class Song extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextWidget('Song: ${songs[index].number}'),
+                Text(
+                  'Song: ${songs[index].number}',
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyText1?.color,
+                    fontSize: 18,
+                  ),
+                ),
                 Card(
                   elevation: 0,
                   color: Theme.of(context).primaryColor,
