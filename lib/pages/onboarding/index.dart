@@ -259,7 +259,7 @@ class _OnBoardingState extends State<OnBoarding> {
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height / 3,
-                  width: (MediaQuery.of(context).size.width / 4) * 3,
+                  width: (MediaQuery.of(context).size.width / 5) * 3,
                   child: RiveAnimation(
                     riveFileName: 'assets/flare/book_open.riv',
                     animationName: 'Book open',
@@ -306,9 +306,15 @@ class _OnBoardingState extends State<OnBoarding> {
             ),
           ),
           SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildPageIndicator(),
+          AnimatedOpacity(
+            opacity: _opacity,
+            duration: Duration(
+              milliseconds: 4000,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: _buildPageIndicator(),
+            ),
           ),
           Consumer(
             builder: (context, watch, child) {

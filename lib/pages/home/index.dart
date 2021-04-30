@@ -65,8 +65,8 @@ class SongListView extends ConsumerWidget {
           )
         : Center(
             child: Container(
-              width: 100,
-              height: 100,
+              width: 70,
+              height: 70,
               child: RiveAnimation(
                 animationName: 'Book flip',
                 riveFileName: 'assets/flare/book_flip.riv',
