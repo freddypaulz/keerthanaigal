@@ -8,6 +8,8 @@ import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'routes.dart';
 import 'theme/colors.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+
 class MyApp extends ConsumerWidget {
   MyApp({Key? key, this.firstTimeVisit}) : super(key: key);
   final bool? firstTimeVisit;
@@ -19,6 +21,7 @@ class MyApp extends ConsumerWidget {
     uiProviderData.getUserTheme();
     return MaterialApp(
       title: 'Keerthanaigal',
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         primarySwatch: KThemeData.colorLight,
         accentColor: KThemeData.colorLightAccent,
@@ -27,6 +30,7 @@ class MyApp extends ConsumerWidget {
           bodyText1: TextStyle(color: Colors.black54),
           bodyText2: TextStyle(color: Colors.black38),
         ),
+        fontFamily: 'SourceSansPro',
       ),
       darkTheme: ThemeData(
         primarySwatch: KThemeData.colorDark,

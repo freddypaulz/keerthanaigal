@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
-import 'package:keerthanaigal/theme/colors.dart';
 import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
+import 'package:keerthanaigal/utilities/dynamicLink.dart';
 import 'package:keerthanaigal/utilities/removeFocus.dart';
 import 'package:keerthanaigal/widgets/TextWidget.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 import 'package:keerthanaigal/widgets/songNumberSearchWidget.dart';
+import 'package:social_share/social_share.dart';
 import '../../layout/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/song_provider.dart';
@@ -13,28 +14,38 @@ import '../../providers/song_provider.dart';
 class SongView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    int songNumber = ModalRoute.of(context)?.settings.arguments != null
+        ? ModalRoute.of(context)?.settings.arguments as int
+        : 1;
     return Container(
-      child: Song(),
+      child: Song(songNumber: songNumber),
     );
   }
 }
 
 class Song extends ConsumerWidget {
+  Song({required this.songNumber});
+  final int songNumber;
   @override
   Widget build(BuildContext context, watch) {
     SongState songsProviderData = watch(SongsProvider);
     var songs = songsProviderData.songList.songs;
     var favoriteList = songsProviderData.favoriteList;
     var uiProviderData = watch(UiProvider);
+    if (songNumber != 1) {
+      context.read(SongsProvider).setSongId(songNumber);
+    }
     return PageView.builder(
       controller: PageController(initialPage: songsProviderData.songViewId - 1),
       itemBuilder: (context, index) {
         return Column(
           children: [
             Container(
-              child: TextWidget(uiProviderData.language == 0
-                  ? songs[index].tamil.title
-                  : songs[index].tanglish.title),
+              child: TextWidget(
+                text: uiProviderData.language == 0
+                    ? songs[index].tamil.title
+                    : songs[index].tanglish.title,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,25 +57,38 @@ class Song extends ConsumerWidget {
                     fontSize: 18,
                   ),
                 ),
-                Card(
-                  elevation: 0,
-                  color: Theme.of(context).primaryColor,
-                  child: IconButton(
-                    icon: Icon(
-                      !favoriteList.contains(songs[index].number.toString())
-                          ? Icons.favorite_border_rounded
-                          : Icons.favorite_rounded,
-                    ),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () {
-                      favoriteList.contains(songs[index].number.toString())
-                          ? songsProviderData
-                              .removeFavorite(songs[index].number)
-                          : songsProviderData
-                              .setFavoriteList(songs[index].number);
-                    },
+                Container(
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.share_rounded,
+                        ),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () async {
+                          Uri url = await DynamicLink()
+                              .createDynamicLink(number: songs[index].number);
+                          SocialShare.shareOptions(url.toString());
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          !favoriteList.contains(songs[index].number.toString())
+                              ? Icons.favorite_border_rounded
+                              : Icons.favorite_rounded,
+                        ),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          favoriteList.contains(songs[index].number.toString())
+                              ? songsProviderData
+                                  .removeFavorite(songs[index].number)
+                              : songsProviderData
+                                  .setFavoriteList(songs[index].number);
+                        },
+                      ),
+                    ],
                   ),
-                )
+                ),
               ],
             ),
             Expanded(
@@ -105,7 +129,7 @@ class SongText extends StatelessWidget {
               for (String item in song[index])
                 Container(
                   margin: EdgeInsets.only(bottom: 5),
-                  child: TextWidget(item),
+                  child: TextWidget(text: item),
                 ),
             ],
           ),

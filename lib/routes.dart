@@ -26,7 +26,7 @@ class Routes {
         );
       case Routes.homePage:
         return MaterialPageRoute<dynamic>(
-          builder: (_) => Home(),
+          builder: (_) => HomePage(),
         );
       case Routes.onboardingPage:
         return MaterialPageRoute<dynamic>(
@@ -34,6 +34,7 @@ class Routes {
         );
       case Routes.songViewPage:
         return MaterialPageRoute<dynamic>(
+          settings: settings,
           builder: (_) => SongViewPage(),
         );
 

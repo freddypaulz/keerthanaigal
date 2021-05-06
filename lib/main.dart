@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/utilities/dynamicLink.dart';
 import 'dart:io';
 import 'app.dart';
 import './utilities/firstTimeVisitChecker.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   HttpOverrides.global = new MyHttpOverrides();
 
-  // await UiState().getUserFontSize();
-  // await UiState().getUserTheme();
-  // await UiState().getUserSongLanguage();
+  await Firebase.initializeApp();
+  await DynamicLink().handleDynamicLink();
 
   runApp(
     ProviderScope(

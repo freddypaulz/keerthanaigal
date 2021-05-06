@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:keerthanaigal/pages/favorites/index.dart';
 import 'package:keerthanaigal/pages/search/index.dart';
 import 'package:keerthanaigal/pages/settings/index.dart';
-import 'package:keerthanaigal/theme/colors.dart';
 import '../home/index.dart';
 
 class MainPage extends StatefulWidget {

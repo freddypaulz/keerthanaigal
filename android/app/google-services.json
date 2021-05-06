@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "298268855071",
+    "project_id": "keerthanaigal-56375",
+    "storage_bucket": "keerthanaigal-56375.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298268855071:android:e13ddf2c1ce95bfa2e3e2a",
+        "android_client_info": {
+          "package_name": "com.example.keerthanaigal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298268855071-nerlp1v9sj7grne3k71rq8mvt9phhuno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH8TJOiTa8R9mU_Va80s04L15hs2W4fKA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298268855071-nerlp1v9sj7grne3k71rq8mvt9phhuno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
