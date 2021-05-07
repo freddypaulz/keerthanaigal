@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/pages/settings/widgets/fontSizeSlider.dart';
 import 'package:keerthanaigal/pages/settings/widgets/themeToggle.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 import '../../providers/ui_provider.dart';
 import 'package:keerthanaigal/layout/index.dart';
 
@@ -39,12 +40,9 @@ class SettingsTextWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(right: 5),
         ),
-        Text(
-          value,
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1?.color,
-            fontSize: 20,
-          ),
+        TextWidget(
+          text: value,
+          fontSize: 20,
         ),
       ],
     );
@@ -108,22 +106,20 @@ class SettingsListView extends StatelessWidget {
           content: FontSizeSlider(),
           actions: <Widget>[
             TextButton(
-              child: Text(
-                'Default',
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                ),
+              child: TextWidget(
+                text: 'Default',
+                color: Theme.of(context).accentColor,
+                fontSize: 18,
               ),
               onPressed: () {
                 context.read(UiProvider).changeTempFontSize(18);
               },
             ),
             TextButton(
-              child: Text(
-                'Set',
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                ),
+              child: TextWidget(
+                text: 'Set',
+                color: Theme.of(context).accentColor,
+                fontSize: 18,
               ),
               onPressed: () {
                 double value = context.read(UiProvider).getTempFontSize();
@@ -146,11 +142,10 @@ class SettingsListView extends StatelessWidget {
           content: ThemeToggle(),
           actions: <Widget>[
             TextButton(
-              child: Text(
-                'Close',
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                ),
+              child: TextWidget(
+                text: 'Close',
+                color: Theme.of(context).accentColor,
+                fontSize: 18,
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -171,11 +166,9 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        'Settings',
-        style: TextStyle(
-          color: Theme.of(context).textTheme.bodyText1?.color,
-        ),
+      title: TextWidget(
+        text: 'Settings',
+        fontSize: 18,
       ),
       centerTitle: true,
     );

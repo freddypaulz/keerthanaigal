@@ -9,6 +9,7 @@ import 'package:keerthanaigal/providers/ui_provider.dart';
 import 'package:keerthanaigal/theme/colors.dart';
 import 'package:keerthanaigal/utilities/removeFocus.dart';
 import 'package:keerthanaigal/widgets/RiveAnimation.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 
 class SearchBar extends StatefulWidget {
@@ -123,18 +124,12 @@ class SearchResults extends ConsumerWidget {
                             child: Container(
                               padding: EdgeInsets.only(top: 10, bottom: 10),
                               margin: EdgeInsets.all(5),
-                              child: Text(
-                                '${index + 1}. $title',
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.color,
-                                  fontSize: uiProviderData.fontSize,
-                                  fontFamily: uiProviderData.language == 0
-                                      ? 'Arima'
-                                      : 'SourceSansPro',
-                                ),
+                              child: TextWidget(
+                                text: '${index + 1}. $title',
+                                align: TextAlign.start,
+                                fontFamily: uiProviderData.language == 0
+                                    ? 'Arima'
+                                    : 'SourceSansPro',
                               ),
                             ),
                           );
@@ -151,12 +146,9 @@ class SearchResults extends ConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          songsProviderData.searchResultText,
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.bodyText1?.color,
-                            fontSize: 20,
-                          ),
+                        TextWidget(
+                          text: songsProviderData.searchResultText,
+                          fontSize: 20,
                         ),
                         songsProviderData.searchResultText != ''
                             ? Container(
@@ -207,11 +199,9 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
         RemoveFocus.removeFocus(context);
       },
       child: AppBar(
-        title: Text(
-          'Search',
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1?.color,
-          ),
+        title: TextWidget(
+          text: 'Search',
+          fontSize: 18,
         ),
         actions: [
           Container(

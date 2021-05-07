@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/models/song_model.dart';
 import 'package:keerthanaigal/widgets/RiveAnimation.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 import '../../providers/song_provider.dart';
 import '../../providers/ui_provider.dart';
 import '../songView/index.dart';
@@ -60,15 +61,11 @@ class SongListView extends ConsumerWidget {
                 child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   margin: EdgeInsets.all(5),
-                  child: Text(
-                    '${index + 1}. $title',
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyText1?.color,
-                      fontSize: uiProviderData.fontSize,
-                      fontFamily: uiProviderData.language == 0
-                          ? 'Arima'
-                          : 'SourceSansPro',
-                    ),
+                  child: TextWidget(
+                    text: '${index + 1}. $title',
+                    fontFamily: uiProviderData.language == 0
+                        ? 'Arima'
+                        : 'SourceSansPro',
                   ),
                 ),
               );
@@ -80,12 +77,9 @@ class SongListView extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'oops! no favorites yet',
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyText1?.color,
-                    fontSize: 20,
-                  ),
+                TextWidget(
+                  text: 'oops! no favorites yet',
+                  fontSize: 20,
                 ),
                 Container(
                   height: 50,
@@ -109,11 +103,9 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        'Favorites',
-        style: TextStyle(
-          color: Theme.of(context).textTheme.bodyText1?.color,
-        ),
+      title: TextWidget(
+        text: 'Favorites',
+        fontSize: 18,
       ),
       actions: [
         Container(

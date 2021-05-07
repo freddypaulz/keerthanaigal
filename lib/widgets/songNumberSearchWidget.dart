@@ -37,7 +37,10 @@ class SongNumberSearchWidget extends ConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextWidget('oops! song not found'),
+                        TextWidget(
+                          text: 'oops! song not found',
+                          fontSize: 18,
+                        ),
                         Container(
                           height: 50,
                           width: 50,
@@ -51,11 +54,10 @@ class SongNumberSearchWidget extends ConsumerWidget {
                   ),
                   actions: <Widget>[
                     TextButton(
-                      child: Text(
-                        'Got it!',
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                        ),
+                      child: TextWidget(
+                        text: 'Got it!',
+                        color: Theme.of(context).accentColor,
+                        fontSize: 18,
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();

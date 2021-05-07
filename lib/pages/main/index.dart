@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keerthanaigal/pages/favorites/index.dart';
 import 'package:keerthanaigal/pages/search/index.dart';
 import 'package:keerthanaigal/pages/settings/index.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 import '../home/index.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,11 +20,8 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        'Keerthanaigal',
-        style: TextStyle(
-          color: Theme.of(context).textTheme.bodyText1?.color,
-        ),
+      title: TextWidget(
+        text: 'Keerthanaigal',
       ),
       centerTitle: true,
     );

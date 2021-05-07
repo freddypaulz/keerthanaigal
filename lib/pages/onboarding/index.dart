@@ -6,6 +6,7 @@ import 'package:keerthanaigal/pages/settings/widgets/fontSizeSlider.dart';
 import 'package:keerthanaigal/pages/settings/widgets/themeToggle.dart';
 import 'package:keerthanaigal/utilities/customPageViewScrollPhysics.dart';
 import 'package:keerthanaigal/widgets/RiveAnimation.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 import '../../utilities/firstTimeVisitChecker.dart';
 
@@ -18,26 +19,22 @@ class VerseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          '"I will sing of the Lord’s great love forever; with my mouth I will make your faithfulness known through all generations."',
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1!.color,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
+        TextWidget(
+          text:
+              '"I will sing of the Lord’s great love forever; with my mouth I will make your faithfulness known through all generations."',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          align: TextAlign.center,
         ),
         SizedBox(
           height: 20,
         ),
-        Text(
-          'Psalm - 89:1',
-          style: TextStyle(
-            color: Theme.of(context).accentColor,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.right,
+        TextWidget(
+          text: 'Psalm - 89:1',
+          color: Theme.of(context).accentColor,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          align: TextAlign.right,
         ),
       ],
     );
@@ -53,29 +50,23 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          'Welcome to the Keerthanaigal App',
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1!.color,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
+        TextWidget(
+          text: 'Welcome to the Keerthanaigal App',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          align: TextAlign.center,
         ),
         SizedBox(
           height: 20,
         ),
         Container(
           width: MediaQuery.of(context).size.width,
-          child: Text(
-            'By the immense Grace of our Holy Father, the Keerthanaigal app brings over 700 classic songs from the book of Geethangal and Keerthanaigal.',
-            // 'Our mission is to bring these classic songs to the community in a modern way with all the new features that an app can provide. By the immense Grace of our Holy Father, the Keethanaigal app brings over 700 classic songs from the book of Geethangal and Keethanaigal.',
-            style: TextStyle(
-              color: Theme.of(context).textTheme.bodyText1!.color,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
+          child: TextWidget(
+            text:
+                'By the immense Grace of our Holy Father, the Keerthanaigal app brings over 700 classic songs from the book of Geethangal and Keerthanaigal.',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            align: TextAlign.center,
           ),
         ),
       ],
@@ -92,14 +83,11 @@ class LanguageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          'Choose song language',
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1!.color,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
+        TextWidget(
+          text: 'Choose song language',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          align: TextAlign.center,
         ),
         SizedBox(
           height: 20,
@@ -124,14 +112,11 @@ class FontSizeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          'Choose song font size',
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1!.color,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
+        TextWidget(
+          text: 'Choose song font size',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          align: TextAlign.center,
         ),
         SizedBox(
           height: 20,
@@ -154,14 +139,11 @@ class ThemeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          'Choose application theme',
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1!.color,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
+        TextWidget(
+          text: 'Choose application theme',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          align: TextAlign.center,
         ),
         Container(
           width: 280,
@@ -354,7 +336,9 @@ class _OnBoardingState extends State<OnBoarding> {
             fontWeight: FontWeight.bold,
           )),
       onPressed: _handleNext,
-      child: Text('Next'),
+      child: TextWidget(
+        text: 'Next',
+      ),
     );
   }
 

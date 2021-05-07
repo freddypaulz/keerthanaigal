@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 
 class FontSizeSlider extends ConsumerWidget {
   // double _currentSliderValue = 0;
@@ -20,12 +21,9 @@ class FontSizeSlider extends ConsumerWidget {
         children: [
           Container(
             height: 50,
-            child: Text(
-              'Font Size',
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodyText1?.color,
-                fontSize: _currentSliderValue,
-              ),
+            child: TextWidget(
+              text: 'Font Size',
+              fontSize: _currentSliderValue,
             ),
           ),
           Slider(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keerthanaigal/providers/ui_provider.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 
 class LanguageDropdownWidget extends StatefulWidget {
   LanguageDropdownWidget({this.underline});
@@ -55,12 +56,9 @@ class _LanguageDropdownWidgetState extends State<LanguageDropdownWidget> {
   }
 
   Widget dropdownTextWidget(String value) {
-    return Text(
-      value,
-      style: TextStyle(
-        color: Theme.of(context).textTheme.bodyText1?.color,
-        fontSize: 18,
-      ),
+    return TextWidget(
+      text: value,
+      fontSize: 18,
     );
   }
 }

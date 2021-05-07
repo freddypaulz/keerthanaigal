@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keerthanaigal/layout/index.dart';
 import 'package:keerthanaigal/pages/songView/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keerthanaigal/widgets/TextWidget.dart';
 import 'package:keerthanaigal/widgets/languageDropdownWidget.dart';
 import 'package:keerthanaigal/widgets/songNumberSearchWidget.dart';
 import '../../providers/song_provider.dart';
@@ -47,15 +48,12 @@ class SongListView extends ConsumerWidget {
                 child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   margin: EdgeInsets.all(5),
-                  child: Text(
-                    '$id. $title',
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyText1?.color,
-                      fontSize: uiProviderData.fontSize,
-                      fontFamily: uiProviderData.language == 0
-                          ? 'Arima'
-                          : 'SourceSansPro',
-                    ),
+                  child: TextWidget(
+                    text: '$id. $title',
+                    align: TextAlign.start,
+                    fontFamily: uiProviderData.language == 0
+                        ? 'Arima'
+                        : 'SourceSansPro',
                   ),
                 ),
               );
@@ -88,12 +86,9 @@ class KAppBar extends StatelessWidget implements PreferredSizeWidget {
         RemoveFocus.removeFocus(context);
       },
       child: AppBar(
-        title: Text(
-          'Keerthanaigal',
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText1?.color,
-            fontSize: 18,
-          ),
+        title: TextWidget(
+          text: 'Keerthanaigal',
+          fontSize: 18,
         ),
         actions: [
           Container(

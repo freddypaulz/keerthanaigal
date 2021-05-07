@@ -45,17 +45,15 @@ class Song extends ConsumerWidget {
                 text: uiProviderData.language == 0
                     ? songs[index].tamil.title
                     : songs[index].tanglish.title,
+                align: TextAlign.center,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Song: ${songs[index].number}',
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyText1?.color,
-                    fontSize: 18,
-                  ),
+                TextWidget(
+                  text: 'Song: ${songs[index].number}',
+                  fontSize: 18,
                 ),
                 Container(
                   child: Row(
@@ -120,22 +118,33 @@ class SongText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return Container(
-          margin: EdgeInsets.only(bottom: 20),
-          child: Column(
-            children: <Widget>[
-              for (String item in song[index])
-                Container(
-                  margin: EdgeInsets.only(bottom: 5),
-                  child: TextWidget(text: item),
-                ),
-            ],
-          ),
+    return Consumer(
+      builder: (context, watch, child) {
+        UiState uiProviderData = watch(UiProvider);
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Column(
+                children: <Widget>[
+                  for (String item in song[index])
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5),
+                      child: TextWidget(
+                        text: item,
+                        align: TextAlign.center,
+                        fontFamily: uiProviderData.language == 0
+                            ? 'Arima'
+                            : 'SourceSansPro',
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
+          itemCount: song.length,
         );
       },
-      itemCount: song.length,
     );
   }
 }
